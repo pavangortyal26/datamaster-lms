@@ -1,0 +1,21 @@
+# Frontend
+frontend/node_modules
+frontend/dist
+frontend/.env
+
+# Backend
+backend/target
+backend/.env
+
+# OS / IDE
+.DS_Store
+.idea/
+*.iml
+.vscode/
+
+# Logs
+*.log
+
+# Environment files
+backend/.env
+frontend/.env

@@ -1,0 +1,9 @@
+SUPABASE_DB_URL=jdbc:postgresql://db.iutwipstmfnzxlsixmty.supabase.co:5432/postgres
+SUPABASE_DB_USER=postgres
+SUPABASE_DB_PASSWORD=5g9n2BAFndb9inT5
+JWT_SECRET=9f8d7c6b5a4e3d2c1b0f9e8d7c6b5a4e3d2c1b0f9e8d7c6b5a4e3d2c1b0f9e8
+
+SMTP_HOST=
+SMTP_PORT=
+SMTP_USERNAME=
+SMTP_PASSWORD=
