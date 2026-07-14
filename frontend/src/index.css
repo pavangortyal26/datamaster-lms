@@ -3,16 +3,34 @@
 @tailwind utilities;
 
 :root {
-  --background: 0 0% 100%;
-  --foreground: 222 47% 11%;
+  --background: 222 47% 6%;
+  --foreground: 210 33% 92%;
 }
 
-.dark {
-  --background: 222 47% 6%;
-  --foreground: 210 40% 98%;
+* {
+  scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-background text-foreground antialiased;
-  font-family: 'Inter', system-ui, sans-serif;
+  @apply bg-ink text-offwhite antialiased font-body;
+}
+
+::selection {
+  @apply bg-teal/30 text-offwhite;
+}
+
+/* Respect reduced-motion preferences across the app */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible keyboard focus ring, consistent across custom components */
+:focus-visible {
+  outline: 2px solid #2DD4BF;
+  outline-offset: 2px;
 }
