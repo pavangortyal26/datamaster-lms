@@ -14,9 +14,11 @@ interface AuthState {
   accessToken: string | null
   isAuthenticated: boolean
   rememberMe: boolean
+  hasBootstrapped: boolean
   setSession: (user: AuthUser, accessToken: string) => void
   setAccessToken: (accessToken: string) => void
   setRememberMe: (value: boolean) => void
+  setHasBootstrapped: (value: boolean) => void
   logout: () => void
 }
 
@@ -30,10 +32,12 @@ export const useAuthStore = create<AuthState>()(
       accessToken: null,
       isAuthenticated: false,
       rememberMe: false,
+      hasBootstrapped: false,
       setSession: (user, accessToken) =>
         set({ user, accessToken, isAuthenticated: true }),
       setAccessToken: (accessToken) => set({ accessToken }),
       setRememberMe: (rememberMe) => set({ rememberMe }),
+      setHasBootstrapped: (hasBootstrapped) => set({ hasBootstrapped }),
       logout: () =>
         set({ user: null, accessToken: null, isAuthenticated: false }),
     }),

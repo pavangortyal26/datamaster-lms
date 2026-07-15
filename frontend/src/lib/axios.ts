@@ -18,7 +18,9 @@ apiClient.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    const isAuthEndpoint = originalRequest?.url?.startsWith('/auth/')
+
+    if (error.response?.status === 401 && !originalRequest._retry && !isAuthEndpoint) {
       originalRequest._retry = true
       try {
         const { data } = await apiClient.post('/auth/refresh')
@@ -27,10 +29,15 @@ apiClient.interceptors.response.use(
         return apiClient(originalRequest)
       } catch (refreshError) {
         useAuthStore.getState().logout()
-        window.location.href = '/login'
+        if (window.location.pathname !== '/login') {
+          window.location.href = '/login'
+        }
         return Promise.reject(refreshError)
       }
     }
+
+    // A 401 on /auth/refresh or /auth/otp/* just means "not logged in" or "bad code" —
+    // let the caller (e.g. useAuthBootstrap, the login form) handle it, don't chase it further.
     return Promise.reject(error)
   },
 )
