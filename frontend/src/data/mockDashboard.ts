@@ -13,7 +13,7 @@ import type {
 
 export const mockEnrolledCourses: EnrolledCourse[] = [
   {
-    id: 'data-engineering',
+    id: 'data-engineering-bootcamp',
     title: 'Data Engineering Bootcamp',
     category: 'Data Engineering',
     instructor: 'Rohan Kulkarni',
@@ -23,7 +23,7 @@ export const mockEnrolledCourses: EnrolledCourse[] = [
     lastAccessed: '2 hours ago',
   },
   {
-    id: 'sql',
+    id: 'advanced-sql-query-optimization',
     title: 'Advanced SQL & Query Optimization',
     category: 'SQL',
     instructor: 'Rohan Kulkarni',
@@ -33,7 +33,7 @@ export const mockEnrolledCourses: EnrolledCourse[] = [
     lastAccessed: '3 days ago',
   },
   {
-    id: 'python',
+    id: 'python-for-data-professionals',
     title: 'Python for Data Professionals',
     category: 'Python',
     instructor: 'Sneha Patil',
@@ -43,7 +43,7 @@ export const mockEnrolledCourses: EnrolledCourse[] = [
     lastAccessed: '1 week ago',
   },
   {
-    id: 'generative-ai',
+    id: 'generative-ai-for-engineers',
     title: 'Generative AI for Engineers',
     category: 'Generative AI',
     instructor: 'Ananya Deshpande',

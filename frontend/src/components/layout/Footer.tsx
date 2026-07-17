@@ -1,6 +1,14 @@
+import { Link, useLocation } from 'react-router-dom'
 import { Braces, Linkedin, Twitter, Youtube, Instagram } from 'lucide-react'
 
 export function Footer() {
+  const location = useLocation()
+  const isHome = location.pathname === '/'
+
+  // Same-page anchors only work as plain <a> when already on the homepage;
+  // otherwise route to "/" + hash so the link actually goes somewhere.
+  const sectionHref = (hash: string) => (isHome ? hash : `/${hash}`)
+
   return (
     <footer id="contact" className="border-t border-border/60 bg-surface/40">
       <div className="mx-auto max-w-7xl px-6 py-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
@@ -23,19 +31,31 @@ export function Footer() {
         <div>
           <p className="font-mono text-xs uppercase tracking-widest text-slate mb-4">Courses</p>
           <ul className="space-y-2 text-sm text-slate">
-            <li><a href="#courses" className="hover:text-offwhite transition-colors">Data Engineering</a></li>
-            <li><a href="#courses" className="hover:text-offwhite transition-colors">Generative AI</a></li>
-            <li><a href="#courses" className="hover:text-offwhite transition-colors">Data Analytics</a></li>
-            <li><a href="#courses" className="hover:text-offwhite transition-colors">Machine Learning</a></li>
+            <li><Link to="/courses?category=data-engineering" className="hover:text-offwhite transition-colors">Data Engineering</Link></li>
+            <li><Link to="/courses?category=generative-ai" className="hover:text-offwhite transition-colors">Generative AI</Link></li>
+            <li><Link to="/courses?category=data-analytics" className="hover:text-offwhite transition-colors">Data Analytics</Link></li>
+            <li><Link to="/courses?category=machine-learning" className="hover:text-offwhite transition-colors">Machine Learning</Link></li>
           </ul>
         </div>
 
         <div>
           <p className="font-mono text-xs uppercase tracking-widest text-slate mb-4">Company</p>
           <ul className="space-y-2 text-sm text-slate">
-            <li><a href="#about" className="hover:text-offwhite transition-colors">About us</a></li>
-            <li><a href="#testimonials" className="hover:text-offwhite transition-colors">Success stories</a></li>
-            <li><a href="#blogs" className="hover:text-offwhite transition-colors">Blogs</a></li>
+            <li>
+              {isHome
+                ? <a href="#about" className="hover:text-offwhite transition-colors">About us</a>
+                : <Link to={sectionHref('#about')} className="hover:text-offwhite transition-colors">About us</Link>}
+            </li>
+            <li>
+              {isHome
+                ? <a href="#testimonials" className="hover:text-offwhite transition-colors">Success stories</a>
+                : <Link to={sectionHref('#testimonials')} className="hover:text-offwhite transition-colors">Success stories</Link>}
+            </li>
+            <li>
+              {isHome
+                ? <a href="#blogs" className="hover:text-offwhite transition-colors">Blogs</a>
+                : <Link to={sectionHref('#blogs')} className="hover:text-offwhite transition-colors">Blogs</Link>}
+            </li>
             <li><a href="mailto:hello@thedatamaster.in" className="hover:text-offwhite transition-colors">Contact</a></li>
           </ul>
         </div>

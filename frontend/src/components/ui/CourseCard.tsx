@@ -1,27 +1,42 @@
+import { Link } from 'react-router-dom'
 import { Star, Clock, Signal, Heart } from 'lucide-react'
 import type { Course } from '@/types/course'
 
-export function CourseCard({ course }: { course: Course }) {
+interface Props {
+  course: Course
+  isWishlisted?: boolean
+  onToggleWishlist?: (course: Course) => void
+}
+
+export function CourseCard({ course, isWishlisted, onToggleWishlist }: Props) {
   const discountPct = course.originalPrice
     ? Math.round(100 - (course.price / course.originalPrice) * 100)
     : null
 
   return (
     <div className="group rounded-lg border border-border/60 bg-surface overflow-hidden hover:border-teal/50 transition-colors flex flex-col">
-      <div className="relative h-40 bg-gradient-to-br from-surfaceHover to-ink flex items-center justify-center">
+      <Link to={`/courses/${course.slug}`} className="relative h-40 bg-gradient-to-br from-surfaceHover to-ink flex items-center justify-center">
         <span className="font-mono text-xs uppercase tracking-widest text-teal">
           {course.category}
         </span>
         <button
-          aria-label="Add to wishlist"
+          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          onClick={(e) => {
+            e.preventDefault()
+            onToggleWishlist?.(course)
+          }}
           className="absolute top-3 right-3 rounded-full bg-ink/60 p-2 text-slate hover:text-amber transition-colors"
         >
-          <Heart className="h-4 w-4" />
+          <Heart className={`h-4 w-4 ${isWishlisted ? 'fill-amber text-amber' : ''}`} />
         </button>
-      </div>
+      </Link>
 
       <div className="p-5 flex flex-col flex-1">
-        <h3 className="font-display text-lg font-semibold leading-snug">{course.title}</h3>
+        <Link to={`/courses/${course.slug}`}>
+          <h3 className="font-display text-lg font-semibold leading-snug hover:text-teal transition-colors">
+            {course.title}
+          </h3>
+        </Link>
         <p className="mt-2 text-sm text-slate leading-relaxed flex-1">{course.description}</p>
 
         <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-slate">
@@ -37,7 +52,7 @@ export function CourseCard({ course }: { course: Course }) {
         </div>
 
         <p className="mt-3 text-xs text-slate">
-          {course.instructor} · {course.studentsCount.toLocaleString('en-IN')} students
+          {course.instructorName} · {course.studentsCount.toLocaleString('en-IN')} students
         </p>
 
         <div className="mt-5 flex items-center justify-between">
@@ -56,9 +71,12 @@ export function CourseCard({ course }: { course: Course }) {
           </div>
         </div>
 
-        <button className="mt-4 w-full rounded-md bg-teal py-2.5 text-sm font-medium text-ink hover:bg-teal-dim transition-colors">
-          Enroll now
-        </button>
+        <Link
+          to={`/courses/${course.slug}`}
+          className="mt-4 w-full rounded-md bg-teal py-2.5 text-sm font-medium text-ink hover:bg-teal-dim transition-colors text-center"
+        >
+          View course
+        </Link>
       </div>
     </div>
   )

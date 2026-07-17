@@ -51,7 +51,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Map<String, Object>> handleGeneric(Exception ex) {
-        return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred");
+
+        ex.printStackTrace();   // <-- Temporary: print the real exception
+
+        return buildResponse(
+                HttpStatus.INTERNAL_SERVER_ERROR,
+                "An unexpected error occurred"
+        );
     }
 
     private ResponseEntity<Map<String, Object>> buildResponse(HttpStatus status, String message) {

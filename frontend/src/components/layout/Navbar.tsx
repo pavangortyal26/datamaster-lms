@@ -1,37 +1,69 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Braces } from 'lucide-react'
 
+// 'route' links go to a real page. 'hash' links jump to a section on the homepage —
+// on any other page they navigate home first, then to that section.
 const NAV_LINKS = [
-  { label: 'Home', href: '#home' },
-  { label: 'Courses', href: '#courses' },
-  { label: 'About', href: '#about' },
-  { label: 'Success Stories', href: '#testimonials' },
-  { label: 'Blogs', href: '#blogs' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', to: '/', type: 'route' as const },
+  { label: 'Courses', to: '/courses', type: 'route' as const },
+  { label: 'About', to: '#about', type: 'hash' as const },
+  { label: 'Success Stories', to: '#testimonials', type: 'hash' as const },
+  { label: 'Blogs', to: '#blogs', type: 'hash' as const },
+  { label: 'Contact', to: '#contact', type: 'hash' as const },
 ]
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation()
+  const isHome = location.pathname === '/'
+
+  const renderLink = (link: (typeof NAV_LINKS)[number], onClick?: () => void) => {
+    if (link.type === 'route') {
+      return (
+        <Link
+          key={link.label}
+          to={link.to}
+          onClick={onClick}
+          className="text-sm text-slate hover:text-offwhite transition-colors"
+        >
+          {link.label}
+        </Link>
+      )
+    }
+    // On the homepage, a plain anchor gives native same-page scrolling.
+    // Anywhere else, route to "/" + the hash so it at least lands on the right page.
+    return isHome ? (
+      <a
+        key={link.label}
+        href={link.to}
+        onClick={onClick}
+        className="text-sm text-slate hover:text-offwhite transition-colors"
+      >
+        {link.label}
+      </a>
+    ) : (
+      <Link
+        key={link.label}
+        to={`/${link.to}`}
+        onClick={onClick}
+        className="text-sm text-slate hover:text-offwhite transition-colors"
+      >
+        {link.label}
+      </Link>
+    )
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-border/60 bg-ink/85 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-        <a href="#home" className="flex items-center gap-2 font-display text-lg font-semibold">
+        <Link to="/" className="flex items-center gap-2 font-display text-lg font-semibold">
           <Braces className="h-5 w-5 text-teal" aria-hidden="true" />
           Data Master Consulting
-        </a>
+        </Link>
 
         <nav className="hidden lg:flex items-center gap-8" aria-label="Primary">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-slate hover:text-offwhite transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((link) => renderLink(link))}
         </nav>
 
         <div className="hidden lg:flex items-center gap-3">
@@ -61,16 +93,7 @@ export function Navbar() {
 
       {isOpen && (
         <nav className="lg:hidden border-t border-border/60 px-6 py-4 flex flex-col gap-4" aria-label="Mobile">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-slate hover:text-offwhite"
-              onClick={() => setIsOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((link) => renderLink(link, () => setIsOpen(false)))}
           <Link to="/login" className="text-sm font-medium text-offwhite">
             Log in
           </Link>
