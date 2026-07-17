@@ -24,6 +24,14 @@ export default {
           DEFAULT: '#2DD4BF',
           foreground: '#0B1220',
         },
+        // App-shell tokens (dashboard only) — CSS-var driven so they respond to the
+        // light/dark toggle. Deliberately namespaced apart from the fixed marketing
+        // palette above (ink/surface/border/offwhite/slate) so the public site is unaffected.
+        appBg: 'hsl(var(--app-bg) / <alpha-value>)',
+        appSurface: 'hsl(var(--app-surface) / <alpha-value>)',
+        appBorder: 'hsl(var(--app-border) / <alpha-value>)',
+        appFg: 'hsl(var(--app-fg) / <alpha-value>)',
+        appMuted: 'hsl(var(--app-muted) / <alpha-value>)',
       },
       fontFamily: {
         display: ['"Space Grotesk"', 'sans-serif'],

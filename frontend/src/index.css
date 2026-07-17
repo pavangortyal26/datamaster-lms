@@ -5,6 +5,22 @@
 :root {
   --background: 222 47% 6%;
   --foreground: 210 33% 92%;
+
+  /* App-shell (dashboard) tokens — light theme values */
+  --app-bg: 210 40% 98%;
+  --app-surface: 0 0% 100%;
+  --app-border: 214 32% 91%;
+  --app-fg: 222 47% 11%;
+  --app-muted: 215 16% 47%;
+}
+
+.dark {
+  /* App-shell (dashboard) tokens — dark theme values, matching the brand ink palette */
+  --app-bg: 222 47% 6%;
+  --app-surface: 220 39% 13%;
+  --app-border: 217 33% 20%;
+  --app-fg: 210 33% 92%;
+  --app-muted: 215 19% 55%;
 }
 
 * {
